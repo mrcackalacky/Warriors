@@ -2,6 +2,7 @@ package com.mrcackalacky.warriors;
 
 import com.mojang.logging.LogUtils;
 import com.mrcackalacky.warriors.item.WItems;
+import com.mrcackalacky.warriors.villager.WVillagers;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -25,6 +26,8 @@ public class Warriors
         // Register the setup method for modloading
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
         WItems.register(eventBus);
+        WVillagers.register(eventBus);
+
         eventBus.addListener(this::setup);
         // Register the enqueueIMC method for modloading
 
