@@ -1,6 +1,7 @@
 {
   "item.warriors.flexdollar": "Flex Dollar",
   "item.warriors.flexcoin": "Flex Coin",
+  "item.warriors.goldensteak": "Golden Steak",
   "itemGroup.warriors": "Warriors",
   "entity.minecraft.villager.warriors.banker": "Banker"
 }
