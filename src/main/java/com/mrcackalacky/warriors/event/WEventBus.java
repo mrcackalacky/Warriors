@@ -3,6 +3,7 @@ package com.mrcackalacky.warriors.event;
 import com.mrcackalacky.warriors.Warriors;
 import com.mrcackalacky.warriors.entity.WEntityTypes;
 import com.mrcackalacky.warriors.entity.biped.WWarriorEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
