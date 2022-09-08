@@ -19,7 +19,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 
 
-version = '0.1'
+version = '0.3'
 group = 'com.mrcackalacky.warriors' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'warriors'
 
@@ -178,7 +178,7 @@ jar {
         attributes([
                 "Specification-Title"     : "warriors",
                 "Specification-Vendor"    : "warriorssareus",
-                "Specification-Version"   : "1", // We are version 1 of ourselves
+                "Specification-Version"   : "0.3", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
                 "Implementation-Vendor"   : "warriorssareus",

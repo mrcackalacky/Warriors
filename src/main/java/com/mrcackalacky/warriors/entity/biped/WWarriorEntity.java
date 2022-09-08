@@ -37,6 +37,7 @@ public class WWarriorEntity extends Animal implements IAnimatable, InventoryCarr
     }
 
 
+    //Entity Goals & Targets
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(3, new RandomSwimmingGoal(this, 0, 1));
@@ -49,6 +50,7 @@ public class WWarriorEntity extends Animal implements IAnimatable, InventoryCarr
         }));
     }
 
+    //Entity Attributes
     public static AttributeSupplier setAttributes() {
         return TamableAnimal.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 40.0D)
@@ -59,6 +61,7 @@ public class WWarriorEntity extends Animal implements IAnimatable, InventoryCarr
                 .build();
     }
 
+    //Null Necessary For Animal Extension
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(@NotNull ServerLevel level, @NotNull AgeableMob pOtherParent) {
