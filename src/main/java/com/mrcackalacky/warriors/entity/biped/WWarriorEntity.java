@@ -1,16 +1,27 @@
 package com.mrcackalacky.warriors.entity.biped;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.Container;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.behavior.RandomSwim;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NonTameRandomTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.TargetGoal;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.npc.InventoryCarrier;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -21,8 +32,14 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class WWarriorEntity extends Animal implements IAnimatable {
+import java.util.function.Predicate;
+
+public class WWarriorEntity extends Animal implements IAnimatable, InventoryCarrier {
     private final AnimationFactory factory = new AnimationFactory(this);
+    private ItemStack canSpawnWeapon() {
+        return (double)this.random.nextFloat() < 0.5D ? new ItemStack(Items.DIAMOND_SWORD) : new ItemStack(Items.DIAMOND_AXE);
+    }
+
 
     public WWarriorEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
@@ -30,8 +47,15 @@ public class WWarriorEntity extends Animal implements IAnimatable {
 
 
     protected void registerGoals() {
-        this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        this.goalSelector.addGoal(1, new FloatGoal(this));
+        this.goalSelector.addGoal(3, new RandomSwimmingGoal(this, 0, 1));
+        this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 0.75, false));
+        this.goalSelector.addGoal(4, new RandomStrollGoal(this, 0.667, 10));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(6, new MoveTowardsTargetGoal(this, 0.667, 32.0F));
+        this.targetSelector.addGoal(7, new NearestAttackableTargetGoal<>(this, Mob.class, 5, false, false, (LivingEntity) -> {
+            return LivingEntity instanceof Enemy && !(LivingEntity instanceof Creeper);
+        }));
     }
 
     public static AttributeSupplier setAttributes() {
@@ -49,6 +73,7 @@ public class WWarriorEntity extends Animal implements IAnimatable {
         return null;
     }
 
+    //GeckoLib
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if (event.isMoving()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", true));
@@ -66,5 +91,10 @@ public class WWarriorEntity extends Animal implements IAnimatable {
     @Override
     public AnimationFactory getFactory() {
         return factory;
+    }
+
+    @Override
+    public Container getInventory() {
+        return null;
     }
 }

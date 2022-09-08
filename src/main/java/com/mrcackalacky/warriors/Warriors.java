@@ -45,10 +45,6 @@ public class Warriors
         GeckoLib.initialize();
     }
 
-    private void clientSetup(final FMLClientSetupEvent event){
-        EntityRenderers.register(WEntityTypes.WARRIOR.get(), WarriorRenderer::new);
-    }
-
     private void setup(final FMLCommonSetupEvent event)
     {
         // some preinit code
