@@ -4,8 +4,12 @@ import com.mrcackalacky.warriors.entity.WEntityTypes;
 import com.mrcackalacky.warriors.entity.client.WarriorRenderer;
 import com.mrcackalacky.warriors.item.WItems;
 import com.mrcackalacky.warriors.villager.WVillagers;
+import com.mrcackalacky.warriors.world.gen.WEntityGen;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -50,5 +54,10 @@ public class Warriors
         // some preinit code
         LOGGER.info("HELLO FROM PREINIT");
         LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
+
+        SpawnPlacements.register(WEntityTypes.WARRIOR.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.WORLD_SURFACE,
+                Animal::checkAnimalSpawnRules);
     }
 }

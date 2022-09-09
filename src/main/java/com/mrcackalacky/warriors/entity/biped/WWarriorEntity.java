@@ -1,5 +1,6 @@
 package com.mrcackalacky.warriors.entity.biped;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
 import net.minecraft.world.DifficultyInstance;
@@ -15,6 +16,7 @@ import net.minecraft.world.entity.npc.InventoryCarrier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -28,12 +30,26 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 public class WWarriorEntity extends Animal implements IAnimatable, InventoryCarrier {
     private final AnimationFactory factory = new AnimationFactory(this);
 
-    protected void populateDefaultEquipmentSlots(DifficultyInstance pDifficulty) {
-        this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.DIAMOND_SWORD));
+    public WWarriorEntity(EntityType<? extends Animal> type, Level world) {
+        super(type, world);
+
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            setDropChance(slot, 0);
+        }
     }
 
-    public WWarriorEntity(EntityType<? extends Animal> entityType, Level level) {
-        super(entityType, level);
+    @Nullable
+    @Override
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
+        SpawnGroupData data = super.finalizeSpawn(worldIn, difficulty, reason, spawnDataIn, dataTag);
+        populateDefaultEquipmentSlots(difficulty);
+
+        return data;
+    }
+
+    @Override
+    protected void populateDefaultEquipmentSlots(DifficultyInstance difficulty) {
+        setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.DIAMOND_SWORD));
     }
 
 
@@ -42,7 +58,7 @@ public class WWarriorEntity extends Animal implements IAnimatable, InventoryCarr
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(3, new RandomSwimmingGoal(this, 0, 1));
         this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 0.75, false));
-        this.goalSelector.addGoal(4, new RandomStrollGoal(this, 0.667, 10));
+        this.goalSelector.addGoal(4, new RandomStrollGoal(this, 0.667, 60));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(6, new MoveTowardsTargetGoal(this, 0.667, 32.0F));
         this.targetSelector.addGoal(7, new NearestAttackableTargetGoal<>(this, Mob.class, 5, false, false, (LivingEntity) -> {
