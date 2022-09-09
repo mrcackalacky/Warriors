@@ -31,6 +31,7 @@ public class WarriorRenderer extends ExtendedGeoEntityRenderer<WWarriorEntity> {
         this.shadowRadius = 0.5f;
     }
 
+
     @Override
     public ResourceLocation getTextureLocation(WWarriorEntity instance) {
         return new ResourceLocation(Warriors.MOD_ID, "textures/entity/warrior/the_warrior.png");
@@ -86,9 +87,9 @@ public class WarriorRenderer extends ExtendedGeoEntityRenderer<WWarriorEntity> {
                 }
 
             }
-            // stack.mulPose(Vector3f.YP.rotationDegrees(180));
+             stack.mulPose(Vector3f.YP.rotationDegrees(180));
 
-            // stack.scale(0.75F, 0.75F, 0.75F);
+             stack.scale(0.75F, 0.75F, 0.75F);
         }
     }
 
