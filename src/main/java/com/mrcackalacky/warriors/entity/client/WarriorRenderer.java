@@ -213,7 +213,7 @@ public class WarriorRenderer extends ExtendedGeoEntityRenderer<WWarriorEntity> {
     public RenderType getRenderType(WWarriorEntity animatable, float partialTicks, PoseStack stack,
                                     MultiBufferSource renderTypeBuffer, VertexConsumer vertexBuilder, int packedLightIn,
                                     ResourceLocation textureLocation) {
-        stack.scale(1.0F, 1.0F, 1.0F);
+        stack.scale(1.5F, 1.5F, 1.5F);
         return super.getRenderType(animatable, partialTicks, stack, renderTypeBuffer, vertexBuilder, packedLightIn, textureLocation);
     }
 

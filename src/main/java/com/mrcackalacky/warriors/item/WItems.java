@@ -20,8 +20,11 @@ public class WItems {
     public static final RegistryObject<Item> FLEX_COIN = ITEMS.register("flexcoin",
             () -> new Item(new Item.Properties().tab(WTab.WARRIORS).stacksTo(1024)));
 
-    public static final RegistryObject<Item> GOLDEN_STEAK = ITEMS.register("goldensteak",
-            () -> new Item(new Item.Properties().tab(WTab.WARRIORS).rarity(Rarity.EPIC).food(WFood.GOLDEN_STEAK)));
+    public static final RegistryObject<Item> GOLDEN_STEAK = ITEMS.register("golden_steak",
+            () -> new Item(new Item.Properties().tab(WTab.WARRIORS).rarity(Rarity.RARE).food(WFood.GOLDEN_STEAK)));
+
+    public static final RegistryObject<Item> GOLDEN_ETERNAL_STEAK = ITEMS.register("golden_eternal_steak",
+            () -> new Item(new Item.Properties().tab(WTab.WARRIORS).rarity(Rarity.EPIC).food(WFood.GOLDEN_ETERNAL_STEAK)));
 
     public static final RegistryObject<Item> WARRIOR_SPAWN_EGG = ITEMS.register("warrior_spawn_egg",
             () -> new ForgeSpawnEggItem(WEntityTypes.WARRIOR, 0x737787, 0x0037ff,
